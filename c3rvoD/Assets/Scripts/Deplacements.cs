@@ -11,10 +11,8 @@ public class Deplacements : MonoBehaviour {
 
     void Start()
     {
-
         brain = GameObject.Find("brain");
         brainPosition = brain.transform.position;
-        //transform.LookAt(brain.transform.position);    
     }
 
     void Update()
