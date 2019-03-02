@@ -9,12 +9,12 @@ public class ZoomCamera : MonoBehaviour {
 	
 	void Update () {
 
-        if(Input.GetAxis("Mouse ScrollWheel") > 0)
+        if(Input.GetAxis("Mouse ScrollWheel") > 0) //zoom in
         {
             GetComponent<Camera>().fieldOfView--;
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) //zoom out
         {
             GetComponent<Camera>().fieldOfView++;
         }

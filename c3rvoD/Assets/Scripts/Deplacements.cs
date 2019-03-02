@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class Deplacements : MonoBehaviour {
 
-    private float speedRight = -50.0f;//a speed modifier
-    private float speedLeft = 50.0f;//a speed modifier
+    private float speedRight = -50.0f; //a speed modifier
+    private float speedLeft = 50.0f; //a speed modifier
     public GameObject brain;
-    private Vector3 brainPosition;
 
-    void Start()
-    {
-        brain = GameObject.Find("brain");
-        brainPosition = brain.transform.position;
-    }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow)) //turn left
             transform.Rotate(0, speedLeft * Time.deltaTime,0);
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow)) //turn right
             transform.Rotate(0, speedRight * Time.deltaTime,0);
     }
 }
