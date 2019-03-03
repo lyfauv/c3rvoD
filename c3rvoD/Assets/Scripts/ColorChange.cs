@@ -7,7 +7,14 @@ public class ColorChange : MonoBehaviour {
 
     void onMouseDown()
     {
-        
+        if (rend.material.color == Color.white)
+        {
+            rend.material.color = Color.green;
+        }
+
+        else
+            rend.material.color = Color.white;
+        actualColor = rend.material.color;
     }
 
     void Start () {
@@ -16,16 +23,5 @@ public class ColorChange : MonoBehaviour {
 	}
 
 	void Update () {
-        if(Input.GetKey(KeyCode.Mouse0))
-        {
-            if (rend.material.color == Color.white)
-            {
-                rend.material.color = Color.green;
-            }
-
-            else
-                rend.material.color = Color.white;
-            actualColor = rend.material.color;
-        }
 	}
 }
