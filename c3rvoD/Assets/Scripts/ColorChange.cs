@@ -5,17 +5,17 @@ public class ColorChange : MonoBehaviour {
     public Color actualColor = Color.white;
     private Renderer rend;
 
-    void onMouseDown()
-    {
-        if (rend.material.color == Color.white)
-        {
-            rend.material.color = Color.green;
-        }
+    //void onMouseDown()
+    //{
+    //    if (rend.material.color == Color.white)
+    //    {
+    //        rend.material.color = Color.green;
+    //    }
 
-        else
-            rend.material.color = Color.white;
-        actualColor = rend.material.color;
-    }
+    //    else
+    //        rend.material.color = Color.white;
+    //    actualColor = rend.material.color;
+    //}
 
     void Start () {
         rend = gameObject.GetComponentInChildren<Renderer>(); 
@@ -23,5 +23,15 @@ public class ColorChange : MonoBehaviour {
 	}
 
 	void Update () {
-	}
+        if(Input.GetKey(KeyCode.Mouse0))
+        {
+            if (rend.material.color == Color.white)
+            {
+                rend.material.color = Color.green;
+            }
+
+            else
+                rend.material.color = Color.white;
+        }
+    }
 }
