@@ -16,5 +16,11 @@ public class Deplacements : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.RightArrow)) //turn right
             transform.Rotate(0, speedRight * Time.deltaTime,0);
+
+        if (Input.GetKey(KeyCode.UpArrow)) // Rotate up
+            transform.Rotate(speedLeft * Time.deltaTime,0, 0);
+
+        if (Input.GetKey(KeyCode.DownArrow)) // Rotate down
+            transform.Rotate(speedRight * Time.deltaTime, 0, 0);
     }
 }
