@@ -3,11 +3,8 @@ using System.Collections;
 
 public class ZoomCamera : MonoBehaviour {
 
-	void Start () {
-	
-	}
-	
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 
         //Zoom with Scroll wheel
         if(Input.GetAxis("Mouse ScrollWheel") > 0) //zoom in

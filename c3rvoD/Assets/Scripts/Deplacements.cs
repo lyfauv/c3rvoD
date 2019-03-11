@@ -6,9 +6,8 @@ public class Deplacements : MonoBehaviour {
 
     private float speedRight = -50.0f; //a speed modifier
     private float speedLeft = 50.0f; //a speed modifier
-    public GameObject brain;
 
-
+    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow)) //turn left
