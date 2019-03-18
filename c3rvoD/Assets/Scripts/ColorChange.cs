@@ -3,15 +3,15 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ColorChange : MonoBehaviour, IPointerDownHandler
+public class ColorChange : MonoBehaviour
 {
     public Color actualColor = Color.white;
     private Renderer rend;
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnMouseDown()
     {
         Debug.Log("Click !");
-        if (rend.material.color == Color.white)
+        if (rend.material.color == Color.white || rend.material.color == Color.black)
         {
             rend.material.color = Color.green;
             
@@ -27,18 +27,4 @@ public class ColorChange : MonoBehaviour, IPointerDownHandler
         rend = gameObject.GetComponentInChildren<Renderer>(); 
         rend.material.color = Color.white;
 	}
-
-    // Update is called once per frame
-    void Update () {
-        //if(Input.GetKey(KeyCode.Mouse0)) //change brain color when user click
-        //{
-        //    if (rend.material.color == Color.white)
-        //    {
-        //        rend.material.color = Color.green;
-        //    }
-
-        //    else
-        //        rend.material.color = Color.white;
-        //}
-    }
 }
