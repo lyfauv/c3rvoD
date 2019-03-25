@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class ColorChange : MonoBehaviour
 {
-    public Color actualColor = Color.white;
     private Renderer rend;
 
+    //Change object color after clicking
     public void OnMouseDown()
     {
         Debug.Log("Click !");
@@ -19,7 +19,6 @@ public class ColorChange : MonoBehaviour
 
         else
             rend.material.color = Color.white;
-        actualColor = rend.material.color;
     }
 
     // Start is called before the first frame update
