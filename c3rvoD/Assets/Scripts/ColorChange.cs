@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class ColorChange : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class ColorChange : MonoBehaviour
     //Change object color after clicking
     public void OnMouseDown()
     {
-        Debug.Log("Click !");
         if (rend.material.color == Color.white || rend.material.color == Color.black)
         {
             rend.material.color = Color.green;
