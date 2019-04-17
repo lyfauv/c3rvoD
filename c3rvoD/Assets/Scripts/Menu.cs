@@ -10,7 +10,9 @@ public class Menu : MonoBehaviour
     void Start()
     {
         menu = GameObject.Find("Main Menu");
+        GameObject selectMecha = GameObject.Find("SelectMechaPanel");
         menu.SetActive(false);
+        selectMecha.SetActive(false);
     }
 
     // Update is called once per frame
