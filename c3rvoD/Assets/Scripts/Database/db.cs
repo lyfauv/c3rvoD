@@ -13,34 +13,20 @@ public class db : MonoBehaviour
     GameObject selectionMecha;
     public GameObject buttonPrefab;
 
-    // Start is called before the first frame update
-    void Start()
+    // Conection to database
+    public void Connect()
     {
         string conn = "URI=file:" + Application.dataPath + "/Plugins/c3rvoD.db"; //Path to database.
         dbconn = new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        Connect();
         // Find all objects needed
         selectionMecha = GameObject.Find("SelectMechaPanel");
-
-
-        //// Query to database
-        //SqliteCommand dbcmd = dbconn.CreateCommand();
-        //string sqlQuery = "SELECT name " + "FROM Area";
-        //dbcmd.CommandText = sqlQuery;
-        //SqliteDataReader reader = dbcmd.ExecuteReader();
-
-        //while (reader.Read())
-        //{
-        //    string name = reader.GetString(0);
-        //    Debug.Log("name =" + name);
-        //}
-        //reader.Close();
-        //reader = null;
-        //dbcmd.Dispose();
-        //dbcmd = null;
-        //dbconn.Close();
-        //dbconn = null;
     }
 
     // Display all buttons created via data in database, on prefab's model MechaButton
@@ -62,6 +48,7 @@ public class db : MonoBehaviour
         while (reader.Read())
         {
             string name = reader.GetString(0);
+            // Buttons creation
             GameObject newButton = Instantiate(buttonPrefab, selectionMecha.transform);
             newButton.name = name;
             newButton.GetComponentInChildren<Text>().text = name;
