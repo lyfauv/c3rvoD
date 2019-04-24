@@ -13,7 +13,7 @@ public class db : MonoBehaviour
     GameObject selectionMecha;
     public GameObject buttonPrefab;
 
-    // Conection to database
+    // Connection to database
     public void Connect()
     {
         string conn = "URI=file:" + Application.dataPath + "/Plugins/c3rvoD.db"; //Path to database.

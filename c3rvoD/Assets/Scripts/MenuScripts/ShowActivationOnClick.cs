@@ -14,6 +14,13 @@ public class ShowActivationOnClick : MonoBehaviour
     SqliteConnection dbconn;
     Renderer rend;
     GameObject targetArea;
+    GameObject mechaPanel;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        mechaPanel = GameObject.FindWithTag("MechaSelect");
+    }
 
     // Conection to database
     public void Connect()
@@ -23,10 +30,11 @@ public class ShowActivationOnClick : MonoBehaviour
         dbconn.Open(); //Open connection to the database.
     }
 
+    // Change color of activated areas (for a given mechanism)
     public void ShowActivation(Button clickedButton)
     {
         int mechaId = 0;
-        Connect(); 
+        Connect();
 
         // Query to database to select the right mechanism
         SqliteCommand dbcmd = dbconn.CreateCommand();
@@ -61,7 +69,7 @@ public class ShowActivationOnClick : MonoBehaviour
             rend = targetArea.GetComponentInChildren<Renderer>();
 
             // Change area color
-            if (rend.material.color == Color.white || rend.material.color == Color.black)
+            if (rend.material.color != Color.green)
             {
                 rend.material.color = Color.green;
 
@@ -70,13 +78,16 @@ public class ShowActivationOnClick : MonoBehaviour
                 rend.material.color = Color.white;
         }
 
+        // Display mechanism name
+        mechaPanel = GameObject.FindWithTag("MechaSelect");
+        mechaPanel.GetComponentInChildren<Text>().text = buttonName;
+
         GameObject selectionMecha = GameObject.Find("SelectMechaPanel");
         selectionMecha.SetActive(false);
 
-
+        // Close access to database
         reader.Close();
         reader = null;
-
         dbcmd.Dispose();
         dbcmd = null;
         dbconn.Close();
