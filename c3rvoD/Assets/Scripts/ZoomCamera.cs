@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class ZoomCamera : MonoBehaviour {
-
     // Update is called once per frame
     void Update () {
 

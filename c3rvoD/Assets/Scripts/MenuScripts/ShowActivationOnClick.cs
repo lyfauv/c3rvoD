@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.Sqlite;
@@ -7,9 +8,11 @@ using System.Data;
 using System.IO;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+#endif
 
 public class ShowActivationOnClick : MonoBehaviour
 {
+#if UNITY_EDITOR
     db data;
     SqliteConnection dbconn;
     Renderer rend;
@@ -20,6 +23,15 @@ public class ShowActivationOnClick : MonoBehaviour
     void Start()
     {
         mechaPanel = GameObject.FindWithTag("MechaSelect");
+    }
+
+    // Change color of given object in white
+    public void AllWhite(string areaName)
+    {
+        GameObject area = GameObject.Find(areaName);
+        rend = area.GetComponentInChildren<Renderer>();
+        rend.material.color = Color.white;
+
     }
 
     // Conection to database
@@ -35,16 +47,35 @@ public class ShowActivationOnClick : MonoBehaviour
     {
         int mechaId = 0;
         Connect();
+        // Get all area names to change color of the objects to white (sort of reset)
+        SqliteCommand dbcmd = dbconn.CreateCommand();
+        string sqlQuery = "SELECT name " + "FROM Area";
+        dbcmd.CommandText = sqlQuery;
+        SqliteDataReader reader = dbcmd.ExecuteReader();
+        List<string> areaNames = new List<string>();
+
+        while(reader.Read())
+        {
+            areaNames.Add(reader.GetString(0));
+        }
+
+        reader.Close();
+        reader = null;
+
+        foreach(string name in areaNames)
+        {
+            AllWhite(name);
+        }
 
         // Query to database to select the right mechanism
-        SqliteCommand dbcmd = dbconn.CreateCommand();
+        dbcmd = dbconn.CreateCommand();
         string buttonName = Convert.ToString(clickedButton.name);
 
-        string sqlQuery = "SELECT id_meca " + "FROM mechanisms" + " WHERE " + "name" + " = '" 
+        sqlQuery = "SELECT id_meca " + "FROM mechanisms" + " WHERE " + "name" + " = '" 
             + buttonName + "'";
         
         dbcmd.CommandText = sqlQuery;
-        SqliteDataReader reader = dbcmd.ExecuteReader();
+        reader = dbcmd.ExecuteReader();
 
         // we keep the right id (appears multiple times in database but has a unique value)
         if(reader.Read())
@@ -53,29 +84,54 @@ public class ShowActivationOnClick : MonoBehaviour
         reader = null;
 
         // Find area names of those involved in the chosen mechanism
-        sqlQuery = "SELECT name " + "FROM Area" + " INNER JOIN linkMechaArea ON Area.id_area = linkMechaArea.id_area" +
-            " WHERE Area.id_area = ( " +
-            "SELECT linkMechaArea.id_area FROM linkMechaArea WHERE id_mecha ="
-            + mechaId + ")";
+        sqlQuery = "SELECT id_area FROM linkMechaArea WHERE id_mecha ="
+            + mechaId;
 
         dbcmd.CommandText = sqlQuery;
         reader = dbcmd.ExecuteReader();
 
+        List<int> areaIds = new List<int>();
+        List<Color> colors = new List<Color>();
+        colors.Add(Color.green);
+        colors.Add(Color.blue);
+        colors.Add(Color.red);
+        colors.Add(Color.yellow);
+
+
         // Find the right gameObjects to change their color
-        while(reader.Read())
+        while (reader.Read())
         {
-            string name = reader.GetString(0);
-            targetArea = GameObject.Find(name);
-            rend = targetArea.GetComponentInChildren<Renderer>();
+            // get area ids
+            int id = reader.GetInt32(0);
+            areaIds.Add(id);
+        }
 
-            // Change area color
-            if (rend.material.color != Color.green)
+        reader.Close();
+        reader = null;
+
+        int i = 0;
+
+        // Find the right area objects
+        foreach (int id in areaIds)
+        {
+            dbcmd = dbconn.CreateCommand();
+            sqlQuery = "SELECT name " + "FROM Area" +
+                       " WHERE id_area = " + id;
+            dbcmd.CommandText = sqlQuery;
+            reader = dbcmd.ExecuteReader();
+            if (reader.Read())
             {
-                rend.material.color = Color.green;
+                string name = reader.GetString(0);
+                targetArea = GameObject.Find(name);
+                rend = targetArea.GetComponentInChildren<Renderer>();
 
+                // Change area color
+                rend.material.color = colors[i%2];
+
+                reader.Close();
+                reader = null;
+                i++;
             }
-            else
-                rend.material.color = Color.white;
         }
 
         // Display mechanism name
@@ -86,12 +142,11 @@ public class ShowActivationOnClick : MonoBehaviour
         selectionMecha.SetActive(false);
 
         // Close access to database
-        reader.Close();
-        reader = null;
         dbcmd.Dispose();
         dbcmd = null;
         dbconn.Close();
         dbconn = null;
 
     }
+#endif
 }

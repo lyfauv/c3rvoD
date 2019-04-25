@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ResetPositionOnClick : MonoBehaviour
 {
     GameObject cameraRotator;
