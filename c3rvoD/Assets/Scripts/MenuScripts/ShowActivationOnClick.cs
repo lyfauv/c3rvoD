@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.Sqlite;
@@ -8,11 +7,9 @@ using System.Data;
 using System.IO;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-#endif
 
 public class ShowActivationOnClick : MonoBehaviour
 {
-#if UNITY_EDITOR
     db data;
     SqliteConnection dbconn;
     Renderer rend;
@@ -148,5 +145,4 @@ public class ShowActivationOnClick : MonoBehaviour
         dbconn = null;
 
     }
-#endif
 }
